@@ -723,6 +723,7 @@ export default function LandingPage() {
         </div>
 
         <div className="hero-right">
+          <img src="/mandala.webp" alt="" aria-hidden="true" className="hero-mandala" data-testid="hero-mandala" />
           <canvas id="aura-canvas" ref={auraCanvasRef}></canvas>
           <div className="aura-glow"></div>
           <div className="aura-ray a1"></div>
