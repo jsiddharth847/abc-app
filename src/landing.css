@@ -286,8 +286,8 @@ html { scroll-behavior: smooth; }
   animation: fadeInAura 1.8s 0.6s forwards;
 }
 
-/* Mandala background — used as-is, slow continuous rotation */
-.landing-root .hero-mandala {
+/* Mandala — standalone, perfectly centered in hero section, slow continuous rotation */
+.landing-root #hero > .hero-mandala {
   position: absolute;
   top: 50%;
   left: 50%;
@@ -308,7 +308,7 @@ html { scroll-behavior: smooth; }
   to   { transform: translate3d(-50%, -50%, 0) rotate(360deg); }
 }
 @media (prefers-reduced-motion: reduce) {
-  .landing-root .hero-mandala { animation: none; }
+  .landing-root #hero > .hero-mandala { animation: none; }
 }
 @keyframes fadeInAura { to { opacity: 1; } }
 
