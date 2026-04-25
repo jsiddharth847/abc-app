@@ -170,11 +170,7 @@ html { scroll-behavior: smooth; }
 
 /* ── HERO (ENHANCED CINEMATIC) ── */
 .landing-root #hero {
-  background: radial-gradient(ellipse 110% 100% at 50% 42%,
-    #F4CB78 0%,
-    #EEBD5C 38%,
-    #E2A946 88%,
-    #D89C3A 100%);
+  background: #EEBD5C;
 }
 .landing-root[data-theme="dark"] #hero {
   background: transparent;
@@ -465,6 +461,17 @@ html { scroll-behavior: smooth; }
   transition: background 0.5s ease;
   background: transparent;
 }
+/* Light mode: completely remove aura overlay layers — eliminates any
+   visible rectangular patch / glow-box on the right side. The mandala +
+   figure float on a single uniform gold field. Dark mode keeps full aura. */
+.landing-root:not([data-theme="dark"]) #aura-canvas,
+.landing-root:not([data-theme="dark"]) .aura-glow,
+.landing-root:not([data-theme="dark"]) .aura-ring,
+.landing-root:not([data-theme="dark"]) .aura-ray,
+.landing-root:not([data-theme="dark"]) .orbit-dot {
+  display: none !important;
+}
+
 .landing-root #aura-canvas {
   position: absolute;
   inset: 0;
@@ -579,8 +586,8 @@ html { scroll-behavior: smooth; }
   height: auto;
   display: block;
   filter:
-    drop-shadow(0 0 22px rgba(196,124,32,0.35))
-    drop-shadow(0 12px 22px rgba(76,42,16,0.22));
+    drop-shadow(0 0 14px rgba(160,98,18,0.20))
+    drop-shadow(0 8px 14px rgba(76,42,16,0.16));
 }
 .landing-root[data-theme="dark"] .tirthankar-img {
   filter:
