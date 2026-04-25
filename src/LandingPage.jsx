@@ -671,6 +671,7 @@ export default function LandingPage() {
   return (
     <div className="landing-root" data-theme={theme} ref={rootRef}>
       <div id="progress-bar" ref={progressRef}></div>
+      <div className="ambient-mandala" aria-hidden="true" style={{ backgroundImage: "url(/mandala.webp)" }}></div>
       <canvas id="three-canvas" ref={bgCanvasRef}></canvas>
 
       {/* Theme Toggle */}
@@ -706,8 +707,10 @@ export default function LandingPage() {
       <section id="hero">
         <img src="/mandala.webp" alt="" aria-hidden="true" className="hero-mandala" data-testid="hero-mandala" />
         <div className="hero-left">
-          <div className="hero-sanskrit">ॐ ह्रीं श्रीं</div>
-          <div className="hero-eyebrow">GEO Jainism · Film 2026</div>
+          <div className="hero-presents">
+            <div className="brand-name">GEO JAINISM</div>
+            <div className="brand-presents">presents</div>
+          </div>
           <h1 className="hero-title">Tamil<br/><span>Jain</span></h1>
           <div className="hero-subtitle">Minority Within A Minority</div>
           <p className="hero-tagline">A cinematic documentary unearthing 2,000 years of hidden Jain heritage across Tamil Nadu — 111 ancient sites, 50+ hills, one mission.</p>
@@ -741,7 +744,6 @@ export default function LandingPage() {
           <div className="tirthankar-wrap" ref={idolRef}>
             <img src="/mahavira.png" alt="Jain Tirthankar" className="tirthankar-img" />
           </div>
-          <div className="mantra-quote">अहिंसा परमो धर्मः</div>
         </div>
 
         <div className="scroll-hint">

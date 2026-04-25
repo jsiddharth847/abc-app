@@ -31,6 +31,33 @@
   font-family: 'Raleway', sans-serif;
   overflow-x: hidden;
   transition: background 0.5s ease, color 0.5s ease;
+  position: relative;
+}
+
+/* Subtle, non-intrusive mandala-inspired ambient backdrop across the whole page */
+.landing-root .ambient-mandala {
+  position: fixed;
+  inset: 0;
+  background-repeat: no-repeat;
+  background-position: 110% -10%;
+  background-size: 720px 720px;
+  opacity: 0.05;
+  pointer-events: none;
+  z-index: 0;
+  -webkit-mask-image: radial-gradient(circle at 50% 50%, #000 0%, #000 60%, rgba(0,0,0,0.5) 75%, rgba(0,0,0,0) 92%);
+          mask-image: radial-gradient(circle at 50% 50%, #000 0%, #000 60%, rgba(0,0,0,0.5) 75%, rgba(0,0,0,0) 92%);
+  animation: ambientMandalaSpin 240s linear infinite;
+}
+.landing-root[data-theme="dark"] .ambient-mandala { opacity: 0.08; }
+@keyframes ambientMandalaSpin {
+  from { transform: rotate(0deg); }
+  to   { transform: rotate(360deg); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .landing-root .ambient-mandala { animation: none; }
+}
+@media (max-width: 700px) {
+  .landing-root .ambient-mandala { background-size: 460px 460px; opacity: 0.04; }
 }
 
 /* ── DARK MODE ── */
@@ -167,6 +194,39 @@ html { scroll-behavior: smooth; }
   animation: fadeUp 1s 0.2s forwards;
   letter-spacing: 1px;
 }
+.landing-root .hero-presents {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 4px;
+  margin-bottom: 26px;
+  opacity: 0;
+  animation: fadeUp 1s 0.3s forwards;
+}
+.landing-root .brand-name {
+  font-family: 'Cinzel', serif;
+  font-size: clamp(20px, 2vw, 28px);
+  letter-spacing: 7px;
+  font-weight: 700;
+  color: var(--saffron);
+  text-transform: uppercase;
+  background: linear-gradient(135deg, var(--marigold-deep) 0%, var(--saffron) 50%, var(--marigold-deep) 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  line-height: 1;
+}
+.landing-root .brand-presents {
+  font-family: 'Cormorant Garamond', serif;
+  font-style: italic;
+  font-size: clamp(11px, 1vw, 13px);
+  letter-spacing: 4px;
+  text-transform: lowercase;
+  color: var(--terracotta);
+  opacity: 0.8;
+  margin-left: 2px;
+}
+.landing-root[data-theme="dark"] .brand-presents { color: var(--marigold); opacity: 0.85; }
 .landing-root .hero-eyebrow {
   font-family:'Cinzel', serif; font-size:10px; letter-spacing:5px;
   color: var(--saffron); text-transform:uppercase; margin-bottom:22px;
@@ -297,18 +357,43 @@ html { scroll-behavior: smooth; }
   object-fit: contain;
   pointer-events: none;
   user-select: none;
-  z-index: 0;
+  /* Sit ABOVE the cream/dark vignette layer (z-index 6 inside hero-right)
+     so its right half is no longer dimmed/occluded — eliminating the
+     vertical cream seam. Still BELOW the Tirthankara (z-index 9), so it
+     never sits in front of Lord Mahavir. */
+  z-index: 7;
   transform-origin: 50% 50%;
   will-change: transform;
+  /* Soft circular fade on the asset's rectangular boundary so the dark
+     square edge of the source file dissolves into the page background.
+     The full mandala artwork (including the center) stays visible. */
+  -webkit-mask-image: radial-gradient(circle at 50% 50%,
+    #000 0%,
+    #000 60%,
+    rgba(0,0,0,0.55) 76%,
+    rgba(0,0,0,0) 92%);
+          mask-image: radial-gradient(circle at 50% 50%,
+    #000 0%,
+    #000 60%,
+    rgba(0,0,0,0.55) 76%,
+    rgba(0,0,0,0) 92%);
+  opacity: 0.85;
   animation: heroMandalaSpin 90s linear infinite;
   transform: translate3d(-50%, -50%, 0) rotate(0deg);
 }
+.landing-root[data-theme="dark"] #hero > .hero-mandala { opacity: 0.95; }
 @keyframes heroMandalaSpin {
   from { transform: translate3d(-50%, -50%, 0) rotate(0deg); }
   to   { transform: translate3d(-50%, -50%, 0) rotate(360deg); }
 }
 @media (prefers-reduced-motion: reduce) {
   .landing-root #hero > .hero-mandala { animation: none; }
+}
+@media (max-width: 1100px) {
+  .landing-root #hero > .hero-mandala { width: clamp(320px, 70vw, 520px); }
+}
+@media (max-width: 600px) {
+  .landing-root #hero > .hero-mandala { width: min(86vw, 420px); }
 }
 @keyframes fadeInAura { to { opacity: 1; } }
 
@@ -518,7 +603,7 @@ html { scroll-behavior: smooth; }
 .landing-root .story-label { font-family:'Cinzel', serif; font-size:10px; letter-spacing:4px; text-transform:uppercase; color:var(--saffron); margin-bottom:16px; }
 .landing-root .story-heading { font-family:'Cormorant Garamond', serif; font-size: clamp(36px, 5vw, 64px); font-weight:300; line-height:1.1; color:var(--deep-brown); margin-bottom:24px; }
 .landing-root .story-heading em { color:var(--saffron); }
-.landing-root .story-body { font-size:15px; line-height:1.9; color:var(--ink); opacity:0.75; font-weight:300; max-width:480px; }
+.landing-root .story-body { font-size:16px; line-height:1.9; color:var(--ink); opacity:0.88; font-weight:400; max-width:480px; }
 .landing-root .story-body + .story-body { margin-top:16px; }
 .landing-root .story-visual { position:relative; }
 .landing-root .stone-card { background: linear-gradient(135deg, var(--sandstone), var(--saffron-light)); border-radius:20px; padding:60px 40px; display:flex; flex-direction:column; align-items:center; gap:20px; border: 1px solid rgba(244,165,53,0.3); box-shadow: 0 20px 60px rgba(61,35,20,0.12); }
@@ -539,7 +624,7 @@ html { scroll-behavior: smooth; }
 .landing-root .tl-content:hover { transform:translateY(-4px); box-shadow: 0 16px 50px rgba(61,35,20,0.14); }
 .landing-root .tl-date { font-family:'Cinzel', serif; font-size:11px; letter-spacing:3px; color:var(--saffron); margin-bottom:8px; }
 .landing-root .tl-title { font-family:'Cormorant Garamond', serif; font-size:22px; font-weight:600; color:var(--deep-brown); margin-bottom:10px; }
-.landing-root .tl-body { font-size:14px; line-height:1.8; color:var(--ink); opacity:0.7; }
+.landing-root .tl-body { font-size:15px; line-height:1.85; color:var(--ink); opacity:0.85; }
 .landing-root .tl-dot { width:16px; height:16px; border-radius:50%; background:var(--saffron); border:3px solid var(--cream); box-shadow: 0 0 0 4px rgba(244,165,53,0.3); flex-shrink:0; margin-top:36px; z-index:1; }
 .landing-root .tl-spacer { flex:1; }
 
@@ -559,7 +644,7 @@ html { scroll-behavior: smooth; }
 .landing-root .challenge-card:hover { transform:translateY(-6px); box-shadow: 0 20px 50px rgba(200,120,90,0.15); }
 .landing-root .challenge-num { font-family:'Cinzel', serif; font-size:40px; font-weight:600; color:rgba(232,144,159,0.3); margin-bottom:8px; line-height:1; }
 .landing-root .challenge-title { font-family:'Cormorant Garamond', serif; font-size:20px; font-weight:600; color:var(--deep-brown); margin-bottom:12px; }
-.landing-root .challenge-body { font-size:13px; line-height:1.8; color:var(--ink); opacity:0.7; }
+.landing-root .challenge-body { font-size:14px; line-height:1.8; color:var(--ink); opacity:0.85; }
 
 /* ── SHOOTING SECTION ── */
 .landing-root .shooting-section { background: linear-gradient(160deg, #EDF5E8 0%, #F0EDD8 100%); }
@@ -568,7 +653,7 @@ html { scroll-behavior: smooth; }
 .landing-root .feature-card:hover { transform:translateY(-8px); }
 .landing-root .feature-icon { font-size:48px; margin-bottom:20px; display:block; }
 .landing-root .feature-title { font-family:'Cormorant Garamond', serif; font-size:24px; font-weight:600; color:var(--deep-brown); margin-bottom:12px; }
-.landing-root .feature-body { font-size:13px; line-height:1.8; color:var(--ink); opacity:0.7; }
+.landing-root .feature-body { font-size:14px; line-height:1.8; color:var(--ink); opacity:0.85; }
 
 /* ── POST PRODUCTION ── */
 .landing-root .post-section { background: var(--pearl); display:grid; grid-template-columns:1fr 1fr; gap:80px; align-items:center; }
@@ -578,7 +663,7 @@ html { scroll-behavior: smooth; }
 .landing-root .epoch-card { padding:24px 28px; border-radius:14px; border-left: 4px solid var(--saffron); background: rgba(244,165,53,0.06); }
 .landing-root .epoch-era { font-family:'Cinzel', serif; font-size:10px; letter-spacing:3px; text-transform:uppercase; color:var(--saffron); margin-bottom:6px; }
 .landing-root .epoch-title { font-family:'Cormorant Garamond', serif; font-size:18px; font-weight:600; color:var(--deep-brown); margin-bottom:8px; }
-.landing-root .epoch-body { font-size:13px; line-height:1.7; color:var(--ink); opacity:0.65; }
+.landing-root .epoch-body { font-size:14px; line-height:1.75; color:var(--ink); opacity:0.82; }
 
 /* ── RELEASE SECTION ── */
 .landing-root .release-section { background: linear-gradient(135deg, #2A1A0E 0%, #3D2314 40%, #5A3020 100%); text-align:center; padding: 120px 60px; position:relative; overflow:hidden; }
@@ -675,8 +760,8 @@ html { scroll-behavior: smooth; }
   line-height: 1.22; color: var(--text-strong);
 }
 .landing-root .course-desc {
-  font-size:13.5px; line-height:1.8;
-  color: var(--text-main); opacity: 0.72;
+  font-size:14.5px; line-height:1.8;
+  color: var(--text-main); opacity: 0.82;
   flex: 1;
 }
 .landing-root .course-meta {
@@ -890,9 +975,18 @@ html { scroll-behavior: smooth; }
 }
 .landing-root .blog-card.featured .blog-title { font-size: 30px; }
 .landing-root .blog-excerpt {
-  font-size: 13px; line-height: 1.75;
-  color: var(--text-main); opacity: 0.7;
+  font-size: 14px; line-height: 1.8;
+  color: var(--text-main); opacity: 0.78;
 }
+.landing-root[data-theme="dark"] .blog-excerpt { opacity: 0.92; color: #EDE2CE; }
+.landing-root[data-theme="dark"] .blog-title { color: #FAF0D9; }
+.landing-root[data-theme="dark"] .blog-date { color: var(--marigold); }
+.landing-root[data-theme="dark"] .course-desc { opacity: 0.92; color: #EDE2CE; }
+.landing-root[data-theme="dark"] .course-title { color: #FAF0D9; }
+.landing-root[data-theme="dark"] .blogs-section {
+  background: linear-gradient(160deg, #18110A 0%, #221810 100%);
+}
+.landing-root[data-theme="dark"] .blogs-section .section-title { color: #FAF0D9; }
 .landing-root .blog-read {
   font-family: 'Cinzel', serif; font-size: 10px;
   letter-spacing: 2.5px;
@@ -1100,6 +1194,7 @@ html { scroll-behavior: smooth; }
 @media (max-width: 1100px) {
   .landing-root #hero { grid-template-columns: 1fr; text-align: center; padding: 100px 40px 60px; gap: 20px; }
   .landing-root .hero-left { align-items: center; text-align: center; }
+  .landing-root .hero-presents { align-items: center; }
   .landing-root .hero-title { text-align: center; }
   .landing-root .hero-tagline { border-left: none; border-top: 1px solid rgba(244,165,53,0.3); padding-left: 0; padding-top: 14px; }
   .landing-root .hero-subtitle::before, .landing-root .hero-subtitle::after { flex: 0 0 16px; }
