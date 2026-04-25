@@ -166,6 +166,12 @@ html { scroll-behavior: smooth; }
 
 /* ── HERO (ENHANCED CINEMATIC) ── */
 .landing-root #hero {
+  background: #EEBD5C;
+}
+.landing-root[data-theme="dark"] #hero {
+  background: transparent;
+}
+.landing-root #hero {
   position: relative; z-index:1;
   min-height: 100vh;
   display:grid;
