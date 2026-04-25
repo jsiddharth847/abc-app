@@ -705,6 +705,7 @@ export default function LandingPage() {
 
       {/* HERO — Enhanced */}
       <section id="hero">
+        <div className="hero-texture" aria-hidden="true" style={{ backgroundImage: "url(/hero-texture.png)" }}></div>
         <img src="/mandala.webp" alt="" aria-hidden="true" className="hero-mandala" data-testid="hero-mandala" />
         <div className="hero-left">
           <div className="hero-presents">
