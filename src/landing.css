@@ -168,9 +168,31 @@ html { scroll-behavior: smooth; }
   opacity: 0.85;
 }
 
-/* ── HERO (ENHANCED CINEMATIC) ── */
+/* ── HERO (ENHANCED CINEMATIC) ──
+   Background applied directly on the section (one layer, full width).
+   NO inner divs, NO overlays — guaranteed seamless, no rectangles ever. */
 .landing-root #hero {
-  background: #EEBD5C;
+  /* Layer 1 (top): barely-visible concentric ring ripples around Mahavir
+     — gives the right side richness without adding new elements. */
+  /* Layer 2: soft warm halo behind Mahavir (ambient diffusion). */
+  /* Layer 3: subtle full-section radial depth (lighter center, deeper edges). */
+  /* Layer 4 (base): single solid gold so the field is uniform end-to-end. */
+  background:
+    repeating-radial-gradient(circle at 78% 50%,
+      transparent 0,
+      transparent 46px,
+      rgba(140,82,18,0.045) 46px,
+      rgba(140,82,18,0.045) 47px),
+    radial-gradient(circle at 78% 50%,
+      rgba(255,234,176,0.35) 0%,
+      rgba(255,228,160,0.18) 18%,
+      rgba(255,228,160,0.05) 32%,
+      transparent 48%),
+    radial-gradient(ellipse 130% 110% at 50% 45%,
+      rgba(255,228,160,0.25) 0%,
+      rgba(238,189,92,0) 55%,
+      rgba(202,148,60,0.28) 100%),
+    #EEBD5C;
 }
 .landing-root[data-theme="dark"] #hero {
   background: transparent;
